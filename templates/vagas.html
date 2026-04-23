@@ -1,2 +1,187 @@
 <!DOCTYPE html>
-<html><body><h1>Vagas Fase 2</h1></body></html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Vagas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      color: #1f2937;
+    }
+    .topbar {
+      background: #0f5cc0;
+      color: white;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    h1, h2 {
+      margin-top: 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .full {
+      grid-column: 1 / -1;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d9e6;
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+    input[readonly] {
+      background: #eef3f8;
+      font-weight: bold;
+    }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    button {
+      border: none;
+      border-radius: 10px;
+      background: #0f5cc0;
+      color: white;
+      padding: 13px 18px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .flash {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .flash.sucesso {
+      background: #edf7ed;
+      color: #1e7a34;
+    }
+    .flash.erro {
+      background: #fdecec;
+      color: #b42318;
+    }
+    .table-wrap {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+    th, td {
+      border: 1px solid #dfe5ee;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th {
+      background: #0f5cc0;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>Gestão de Vagas - BRA Serviços</div>
+    <a href="/logout">Sair</a>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h1>Solicitação de Vaga</h1>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="flash sucesso">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="post">
+        <div class="grid">
+          <div>
+            <label for="supervisor">Supervisor</label>
+            <select name="supervisor" id="supervisor" required>
+              <option value="">Selecione</option>
+              {% for s in supervisores %}
+                <option value="{{ s }}">{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label for="unidade">Unidade</label>
+            <select name="unidade" id="unidade" required>
+              <option value="">Selecione</option>
+              {% for u in unidades %}
+                <option value="{{ u }}">{{ u }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label for="posto">Posto</label>
+            <select name="posto" id="posto" required>
+              <option value="">Selecione</option>
+              {% for p in postos %}
+                <option value="{{ p }}">{{ p }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label for="motivo">Motivo da solicitação</label>
+            <input type="text" name="motivo" id="motivo" required>
+          </div>
+
+          <div class="full">
+            <label for="observacao">Observação</label>
+            <textarea name="observacao" id="observacao"></textarea>
+          </div>
+
+          <div class="full">
+            <button type="submit">Registrar solicitação</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
