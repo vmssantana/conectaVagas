@@ -3,61 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Gestão de Vagas</title>
+  <title>Painel de Vagas - Login</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
       margin: 0;
       min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
     .card {
-      background: #fff;
       width: 100%;
-      max-width: 380px;
-      padding: 28px;
-      border-radius: 14px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      max-width: 440px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+      padding: 34px 30px;
     }
+
     h1 {
-      margin: 0 0 18px;
-      font-size: 24px;
+      margin: 0 0 26px;
       text-align: center;
+      font-size: 28px;
+      color: #0f172a;
     }
+
     label {
       display: block;
+      font-size: 16px;
       font-weight: bold;
-      margin-top: 14px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      color: #111827;
     }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
     input {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d9e6;
-      border-radius: 10px;
+      padding: 16px;
       box-sizing: border-box;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
     }
+
+    input:focus {
+      border-color: #2563eb;
+    }
+
     button {
       width: 100%;
-      margin-top: 18px;
-      padding: 12px;
       border: none;
-      border-radius: 10px;
-      background: #0f5cc0;
+      border-radius: 14px;
+      background: #1f61c3;
       color: #fff;
-      font-size: 15px;
+      font-size: 18px;
+      padding: 16px;
       cursor: pointer;
+      font-weight: bold;
     }
+
+    button:hover {
+      background: #184fa0;
+    }
+
     .flash {
-      margin-bottom: 12px;
-      padding: 10px 12px;
-      border-radius: 10px;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
       font-size: 14px;
+    }
+
+    .flash.erro {
       background: #fdecec;
       color: #b42318;
+      border: 1px solid #f3c7c3;
+    }
+
+    @media (max-width: 520px) {
+      .card {
+        margin: 16px;
+        padding: 26px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -65,20 +103,24 @@
   <div class="card">
     <h1>Painel de Vagas</h1>
 
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        {% for message in messages %}
-          <div class="flash">{{ message }}</div>
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
         {% endfor %}
       {% endif %}
     {% endwith %}
 
     <form method="post">
-      <label for="usuario">Usuário</label>
-      <input type="text" id="usuario" name="usuario" required>
+      <div class="field">
+        <label for="usuario">Usuário</label>
+        <input type="text" id="usuario" name="usuario" required>
+      </div>
 
-      <label for="senha">Senha</label>
-      <input type="password" id="senha" name="senha" required>
+      <div class="field">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required>
+      </div>
 
       <button type="submit">Entrar</button>
     </form>
